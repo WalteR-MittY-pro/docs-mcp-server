@@ -256,6 +256,17 @@ read_section ──► 整篇文档
 
 ## 11. 如何复现
 
+**常设关卡（推荐入口）**：bench 里的 `mcp-api-judge/retrieval-gate` 任务（engine-eval 类型，不跑 agent、不需要设备、无需模型凭据，约 3~5 分钟），一条命令对同一份 114 题并排出三列——grep 直读（无 MCP 基线）／原版 MCP／当前 track 部署的 MCP：
+
+```bash
+python3 bench/runner/scripts/run_tasks.py --track cjmp --filter "mcp-api-judge/*" --agent opencode
+# 结果 JSON（含逐题记录）: bench/tasks/mcp-api-judge/retrieval-gate/workspace/retrieval-gate/retrieval-gate.json
+```
+
+关卡自检：track 处于原版配置时，original 与 current 两列应完全一致。首次运行实测（2026-09-02，track＝原版配置）：grep 召回 91.2%（真实 78.1%）但单次返回量中位 26,506 字符；原版 MCP 召回 64.9%（真实 34.4%）、11,640 字符——旧 bundle store 的召回连朴素 grep 都不如，而 grep 每次要背走预览加整篇案例文件。fork 卡片（召回 94.7%／672 字符）是唯一两个维度同时占优的通道；切 track 至 fork 配置重跑，即可在 current 列复现。
+
+**手工复现各步**：
+
 ```bash
 cd /Users/user/Desktop/project/docs-mcp-server
 
