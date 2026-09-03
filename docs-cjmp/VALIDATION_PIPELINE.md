@@ -263,7 +263,7 @@ python3 bench/runner/scripts/run_tasks.py --track cjmp --filter "mcp-api-judge/*
 # 结果 JSON（含逐题记录）: bench/tasks/mcp-api-judge/retrieval-gate/workspace/retrieval-gate/retrieval-gate.json
 ```
 
-关卡自检：track 处于原版配置时，original 与 current 两列应完全一致。首次运行实测（2026-09-02，track＝原版配置）：grep 召回 91.2%（真实 78.1%）但单次返回量中位 26,506 字符；原版 MCP 召回 64.9%（真实 34.4%）、11,640 字符——旧 bundle store 的召回连朴素 grep 都不如，而 grep 每次要背走预览加整篇案例文件。fork 卡片（召回 94.7%／中位 3822、硬顶 4219）是唯一两个维度同时占优的通道；切 track 至 fork 配置重跑，即可在 current 列复现。
+关卡自检：track 处于原版配置时，original 与 current 两列应完全一致（original 侧现为官方 arkui-cj 文档语料，"一致"仅在与 track 同语料时成立；常态下两列差值即 track 配置与"原版服务＋官方文档"基线的差距）。关卡题库 2026-09-03 瘦身为 **32 道手写题**（82 道自动生成题移除：题面自带答案关键词、召回虚高；fork 仓库 `docs-cjmp/eval/eval_set.jsonl` 保留 114 题全量作为历史实验记录）。瘦身后首测（track＝原版 bundle 配置，original＝官方文档语料）：grep 召回 78.1%／返回量中位 59,179 字符；原版服务＋官方文档 59.4%／17,562 字符；原版服务＋大书 bundle 34.4%／17,896 字符——**同一服务、仅换语料组织方式，召回差 25 个百分点**；fork 卡片（历史值 81.2%／3,822、硬顶 4,219）仍是唯一双优通道。
 
 **手工复现各步**：
 
