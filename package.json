@@ -1,6 +1,6 @@
 {
   "name": "@arabold/docs-mcp-server",
-  "version": "3.0.1",
+  "version": "3.0.1-cjmp.0",
   "description": "MCP server for fetching and searching documentation",
   "type": "module",
   "bin": {
@@ -21,7 +21,7 @@
     "package.json"
   ],
   "scripts": {
-    "prepare": "husky || true",
+    "prepare": "husky || true; npm run build",
     "build": "vite build --config vite.config.web.ts && vite build",
     "start": "node --enable-source-maps dist/index.js",
     "cli": "node --enable-source-maps dist/index.js",
